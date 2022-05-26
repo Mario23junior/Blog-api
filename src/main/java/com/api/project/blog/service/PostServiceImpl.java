@@ -9,4 +9,5 @@ public interface PostServiceImpl {
 	PostDto createPost(PostDto postDto);
 	List<PostDto> getAllPosts();
 	PostDto getPosById(Long id);
+	PostDto updatePost(PostDto postDto, Long id);
 }
