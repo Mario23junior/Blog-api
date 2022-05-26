@@ -3,6 +3,7 @@ package com.api.project.blog.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.api.project.blog.exception.ResourceNotFoundException;
 import com.api.project.blog.model.Post;
 import com.api.project.blog.payload.PostDto;
 import com.api.project.blog.repository.PostRepository;
@@ -49,5 +50,11 @@ public class PostService implements PostServiceImpl{
 		post.setDescription(postDto.getDescription());
 		post.setContent(postDto.getContent());
 		return post;
+	}
+
+	@Override
+	public PostDto getPosById(Long id) {
+		Post postId = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Posts", "id", id));
+ 		return mapToDTO(postId);
 	}
 }
