@@ -36,9 +36,10 @@ public class PostController {
 	@GetMapping
 	public PostResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0",required = false)int pageNo,
 			                        @RequestParam(value = "pageSize", defaultValue = "3", required = false)int pageSize,
-			                        @RequestParam(value = "sort",defaultValue = "id",required = false)String sortBy
+			                        @RequestParam(value = "sort",defaultValue = "id",required = false)String sortBy,
+			                        @RequestParam(value = "sortDir",defaultValue = "asc",required = false)String sortDir
 			) {
-		return postService.getAllPosts(pageNo, pageSize, sortBy);
+		return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
 	}
 	
 	@GetMapping("{id}")

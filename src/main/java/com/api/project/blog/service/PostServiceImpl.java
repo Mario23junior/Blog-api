@@ -6,7 +6,7 @@ import com.api.project.blog.payload.PostResponse;
 public interface PostServiceImpl {
   
 	PostDto createPost(PostDto postDto);
-	PostResponse getAllPosts(int pageNo, int pageSize,String sortBy);
+	PostResponse getAllPosts(int pageNo, int pageSize,String sortBy, String sortDir);
 	PostDto getPosById(Long id);
 	PostDto updatePost(PostDto postDto, Long id);
 	void deletePostById(Long id);
