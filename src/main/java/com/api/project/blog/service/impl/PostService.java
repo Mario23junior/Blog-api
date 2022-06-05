@@ -9,6 +9,9 @@ import com.api.project.blog.payload.PostDto;
 import com.api.project.blog.repository.PostRepository;
 import com.api.project.blog.service.PostServiceImpl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,9 +32,13 @@ public class PostService implements PostServiceImpl{
 	}
 
 	@Override
-	public List<PostDto> getAllPosts() {
-		List<Post> posts = postRepository.findAll();
- 		List<PostDto> convertPosts = posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+	public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+		
+		Pageable pageable = PageRequest.of(pageNo, pageSize);
+				
+		Page<Post> posts = postRepository.findAll(pageable);
+		List<Post> listPost = posts.getContent();
+ 		List<PostDto> convertPosts = listPost.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
  		return convertPosts;
  	}
 

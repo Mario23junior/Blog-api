@@ -7,8 +7,8 @@ import com.api.project.blog.payload.PostDto;
 public interface PostServiceImpl {
   
 	PostDto createPost(PostDto postDto);
-	List<PostDto> getAllPosts();
+	List<PostDto> getAllPosts(int pageNo, int pageSize);
 	PostDto getPosById(Long id);
 	PostDto updatePost(PostDto postDto, Long id);
 	void deletePostById(Long id);
-}
+ }
