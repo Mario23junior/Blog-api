@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.api.project.blog.exception.ResourceNotFoundException;
 import com.api.project.blog.model.Post;
 import com.api.project.blog.payload.PostDto;
+import com.api.project.blog.payload.PostResponse;
 import com.api.project.blog.repository.PostRepository;
 import com.api.project.blog.service.PostServiceImpl;
 
@@ -32,14 +33,23 @@ public class PostService implements PostServiceImpl{
 	}
 
 	@Override
-	public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+	public PostResponse getAllPosts(int pageNo, int pageSize) {
 		
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 				
 		Page<Post> posts = postRepository.findAll(pageable);
 		List<Post> listPost = posts.getContent();
- 		List<PostDto> convertPosts = listPost.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
- 		return convertPosts;
+ 		List<PostDto> content = listPost.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+ 		
+ 		PostResponse postResponse = new PostResponse();
+ 		postResponse.setContent(content);
+ 		postResponse.setPageNo(posts.getNumber());
+ 		postResponse.setPageSuze(posts.getSize());
+ 		postResponse.setTotalElements(posts.getTotalElements());
+ 		postResponse.setTotalPages(posts.getTotalPages());
+ 		postResponse.setLast(posts.isLast());
+ 		
+ 		return postResponse;
  	}
 
 	private PostDto mapToDTO(Post post) {
