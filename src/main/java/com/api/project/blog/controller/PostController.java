@@ -3,6 +3,7 @@ package com.api.project.blog.controller;
 import com.api.project.blog.payload.PostDto;
 import com.api.project.blog.payload.PostResponse;
 import com.api.project.blog.service.impl.PostService;
+import com.api.project.blog.utils.AppConstantsPage;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,10 @@ public class PostController {
 	}
 	
 	@GetMapping
-	public PostResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0",required = false)int pageNo,
-			                        @RequestParam(value = "pageSize", defaultValue = "3", required = false)int pageSize,
-			                        @RequestParam(value = "sort",defaultValue = "id",required = false)String sortBy,
-			                        @RequestParam(value = "sortDir",defaultValue = "asc",required = false)String sortDir
+	public PostResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = AppConstantsPage.DEFAULT_PAGE_NUMBER,required = false)int pageNo,
+			                        @RequestParam(value = "pageSize", defaultValue = AppConstantsPage.DEFAULT_PAGE_SIZE, required = false)int pageSize,
+			                        @RequestParam(value = "sort",defaultValue = AppConstantsPage.DEFAULT_SORT_BY,required = false)String sortBy,
+			                        @RequestParam(value = "sortDir",defaultValue = AppConstantsPage.DEFAULT_SORT_DIRECTION ,required = false)String sortDir
 			) {
 		return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
 	}
