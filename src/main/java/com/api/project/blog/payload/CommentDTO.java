@@ -25,14 +25,6 @@ public class CommentDTO {
 		this.id = id;
 	}
 
-	public Post getPost() {
-		return post;
-	}
-
-	public void setPost(Post post) {
-		this.post = post;
-	}
-
 	public String getName() {
 		return name;
 	}
