@@ -3,6 +3,7 @@ package com.api.project.blog.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.api.project.blog.exception.BlogApiException;
 import com.api.project.blog.exception.ResourceNotFoundException;
 import com.api.project.blog.model.Comment;
 import com.api.project.blog.model.Post;
@@ -11,6 +12,7 @@ import com.api.project.blog.repository.CommentRepository;
 import com.api.project.blog.repository.PostRepository;
 import com.api.project.blog.service.CommentService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -61,4 +63,32 @@ public class CommentServiceImpl implements CommentService {
 		return coment;
 	
 	}
+
+	@Override
+	public CommentDTO getCommentsById(Long postId, Long commentsId) {
+	   Post post = postRepository.findById(postId).orElseThrow(
+			   () -> new ResourceNotFoundException("Post", "id", commentsId));
+	   
+	   Comment comment = commentRepository.findById(commentsId).orElseThrow(()
+			   -> new ResourceNotFoundException("Comments","Id", commentsId));
+	   
+	   if(!comment.getPost().getId().equals(post.getId())) {
+		   throw new BlogApiException(HttpStatus.BAD_REQUEST, "Comment  does not belang to post");
+	   }
+	   
+	return mapToDTO(comment);
+   		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

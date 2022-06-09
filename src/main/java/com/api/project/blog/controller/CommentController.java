@@ -34,4 +34,13 @@ public class CommentController {
 	public List<CommentDTO> CommentsByPostId(@PathVariable(value = "postId") Long postId) {
 		return commentService.getCommentsByPostId(postId);
 	}
+	
+	@GetMapping("/posts/{postId}/comments/{id}")
+	public ResponseEntity<CommentDTO> getCommentById(@PathVariable(value = "postId") Long postId,
+			@PathVariable(value = "id") Long commentId) {
+		  
+		CommentDTO commentDto = commentService.getCommentsById(postId, commentId);
+		
+		return new ResponseEntity<CommentDTO>(commentDto,HttpStatus.OK);
+	}
 }
