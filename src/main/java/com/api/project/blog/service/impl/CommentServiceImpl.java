@@ -57,6 +57,21 @@ public class CommentServiceImpl implements CommentService {
 		return mapToDTO(updateComment);
  	}
 	
+	
+	@Override
+	public void deleteComment(Long postId, Long commentId) {
+		Post post = postRepository.findById(postId).orElseThrow(
+				() -> new ResourceNotFoundException("post","id",postId));
+		
+		Comment comment = commentRepository.findById(commentId).orElseThrow(() -> 
+		    new ResourceNotFoundException("Comment", "ids", commentId));
+		
+		 if(!comment.getPost().getId().equals(post.getId())) {
+			   throw new BlogApiException(HttpStatus.BAD_REQUEST, "Comment  does not belang to post");
+		   }
+		 commentRepository.delete(comment);
+	}
+	
 	@Override
 	public List<CommentDTO> getCommentsByPostId(Long postId) {
  	   List<Comment> comments = commentRepository.findByPostId(postId);
