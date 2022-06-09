@@ -1,5 +1,8 @@
 package com.api.project.blog.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.api.project.blog.exception.ResourceNotFoundException;
 import com.api.project.blog.model.Comment;
 import com.api.project.blog.model.Post;
@@ -32,6 +35,12 @@ public class CommentServiceImpl implements CommentService {
 		
 		Comment newcomment = commentRepository.save(comment);
 		return mapToDTO(newcomment);	
+	}
+	
+	@Override
+	public List<CommentDTO> getCommentsByPostId(Long postId) {
+ 	   List<Comment> comments = commentRepository.findByPostId(postId);
+ 	   return comments.stream().map(comment -> mapToDTO(comment)).collect(Collectors.toList());	
 	}
 	
 	private CommentDTO mapToDTO(Comment comment) {
