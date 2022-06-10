@@ -12,6 +12,7 @@ import com.api.project.blog.repository.CommentRepository;
 import com.api.project.blog.repository.PostRepository;
 import com.api.project.blog.service.CommentService;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,12 @@ public class CommentServiceImpl implements CommentService {
 
 	private CommentRepository commentRepository;
 	private PostRepository postRepository;
+	private ModelMapper mapper;
 	
-	public CommentServiceImpl(CommentRepository commentRepository,PostRepository postRepository) {
+	public CommentServiceImpl(CommentRepository commentRepository,PostRepository postRepository, ModelMapper mapper) {
 		this.commentRepository  = commentRepository;
 		this.postRepository  = postRepository;
+		this.mapper = mapper;
 	}
 	
 	@Override
@@ -79,20 +82,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	private CommentDTO mapToDTO(Comment comment) {
-		CommentDTO commentDto = new CommentDTO();
-		commentDto.setId(comment.getId());
-		commentDto.setName(comment.getName());
-		commentDto.setEmail(comment.getEmail());
-		commentDto.setBody(comment.getBody());
-		return commentDto;
+       CommentDTO commenDto = mapper.map(comment, CommentDTO.class);
+		return commenDto;
 	}
 	
 	private Comment mapToEntity(CommentDTO commentDto) {
-		Comment coment = new Comment();
-		coment.setId(commentDto.getId());
-		coment.setName(commentDto.getName());
-		coment.setEmail(commentDto.getEmail());
-		coment.setBody(commentDto.getBody());
+		Comment coment = mapper.map(commentDto, Comment.class);
 		return coment;
 	
 	}
