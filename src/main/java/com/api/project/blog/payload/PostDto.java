@@ -1,5 +1,7 @@
 package com.api.project.blog.payload;
 
+import java.util.Set;
+
 public class PostDto {
 
 	private Long id;
@@ -9,6 +11,17 @@ public class PostDto {
 	private String description;
 
 	private String content;
+	
+	private Set<CommentDTO> comments;
+
+	
+	public Set<CommentDTO> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<CommentDTO> comments) {
+		this.comments = comments;
+	}
 
 	public Long getId() {
 		return id;

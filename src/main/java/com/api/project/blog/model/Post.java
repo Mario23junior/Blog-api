@@ -41,7 +41,7 @@ public class Post {
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
